@@ -2,6 +2,8 @@
 include_once('./database/operations.php');
 $db = new operations();
 
+$updated = '';
+
 if (isset($_GET['action'])) {
     if (isset($_GET['id'])) {
         $where = array(
@@ -29,8 +31,14 @@ if (isset($_POST['update'])) {
     );
 
     $db->update('user_table', $update_data, $where_condition);
-    header("location:user_view.php?updated=1");
+    header("location:user_edit.php?updated=1");
 }
+
+if (isset($_GET['updated'])) {
+    $updated = 'Entry has been Updated';
+}
+?>
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,15 +98,21 @@ if (isset($_POST['update'])) {
 
                     <div class="container">
 
+                        <?php
+                        if ($updated != '') {
+                        ?>
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <i class="icon fas fa-check"></i>
+
+                                <?php echo $updated; ?>
+                            </div>
+                        <?php
+                        }
+
+                        ?>
                         <form action="" method="POST">
                             <div class="row">
-                                <?php
-
-
-
-
-                                ?>
-
 
                                 <div class="mb-3 col-md-6">
                                     <label for="name" class="form-label">Name</label>

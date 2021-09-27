@@ -2,6 +2,9 @@
 include_once('./database/operations.php');
 $db = new operations();
 
+
+
+
 $error_alert = '';
 if (isset($_POST['submit'])) {
     extract($_POST);
@@ -33,11 +36,21 @@ if (isset($_POST['submit'])) {
     $date = (date("Y-m-d", $t));
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $verify = $db->verify('user_table', 'email', $email);
+
+    if ($verify == 1) {
+        $error_alert .= "Email already exists" . "<br>";
+    }
+
+
     $static = array("created" => $date, "status" => 0, "password" => $hashed_password);
+
+
     $fields = array('confirm_password', 'submit');
     if ($error_alert == '') {
         $result_db =  $db->insertData('user_table', $fields, $_POST, $static);
-        header("Location: user_add.php");
+        header("Location: user_add.php?added=1");
     }
 }
 
@@ -111,7 +124,7 @@ if (isset($_POST['submit'])) {
                             </div>
                         <?php
                         }
-                        if (isset($result_db) && !empty($result_db)) {
+                        if (isset($_GET['added'])) {
                         ?>
                             <div class="alert alert-success alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -148,6 +161,21 @@ if (isset($_POST['submit'])) {
                                     <label for="mobile_no" class="form-label">Mobile-No</label>
                                     <input type="text" class="form-control" name="mobile_no" id="mobile_no" value="<?php echo isset($mobile_no) ? $mobile_no : ''; ?>">
                                 </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="type" class="form-label">User Type</label>
+                                    <select id="type" name="type" class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="sub_admin">Sub-Admin</option>
+                                        <option value="User">User</option>
+
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="image" class="form-label">Image</label>
+                                    <input type="file" class="form-control" name="image" id="image" value="<?php echo isset($user_image) ? $user_image : ''; ?>">
+                                </div>
+
                                 <div class="mb-3 col-md-6">
                                     <label for="" class="form-label">Gender</label>
                                     <br>

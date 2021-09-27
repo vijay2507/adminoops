@@ -14,6 +14,11 @@ $db = new operations();
 if(isset($_GET['deleted'])){
    $deleted='Entry has been Deleted';
 }
+
+
+if(isset($_GET['updated'])){
+    $deleted='Entry has been Updated';
+}
 ?>
 
 
@@ -64,7 +69,7 @@ if(isset($_GET['deleted'])){
                         ?>
                             <div class="alert alert-success alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                           
+                                <i class="icon fas fa-check"></i>
                                 <?php echo $deleted; ?>
                             </div>
                         <?php
@@ -86,6 +91,8 @@ if(isset($_GET['deleted'])){
                     <th>Email</th>
                     <th>Contact Number</th>
                     <th>Gender</th>
+                    <th>Image</th>
+                    <th>type</th>
                     <th>Action</th>
                     <th>Delete</th>
                    
@@ -107,8 +114,11 @@ if(isset($_GET['deleted'])){
                     <td><?php echo $post["email"]; ?></td>
                     <td><?php echo $post["mobile_no"]; ?> </td>
                     <td><?php echo $post["gender"]; ?></td>
-                    <td>  <a href="user_edit.php?action=edit&id=<?php echo $post["id"]; ?>"name="edit">Edit</a>    </td>
-                    <td>  <a href="#"id="<?php echo $post["id"]; ?>" name="delete" class="delete" >Delete </a>    </td>
+                    <td><img src="<?php echo $post["image"]; ?>" alt="error"></td>
+                    <td><?php echo $post["type"]; ?></td>
+
+                    <td>  <a href="user_edit.php?action=edit&id=<?php echo $post["id"]; ?>"name="edit" class="btn btn-success">Edit</a>    </td>
+                    <td>  <a href="#"id="<?php echo $post["id"]; ?>" name="delete" class="delete btn btn-danger" >Delete </a>    </td>
                     
                   
                   </tr>
@@ -149,21 +159,20 @@ if(isset($_GET['deleted'])){
 <?php include_once('layout/js.php')   ?>
 <!-- Page specific script -->
 <script>
-  $(document).ready(function(){
-      
+   $(function () {
     $("#example_user").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example_user').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    }).buttons().container().appendTo('#example_user_wrapper .col-md-6:eq(0)');
+    // $('#example_user').DataTable({
+    //   "paging": true,
+    //   "lengthChange": false,
+    //   "searching": false,
+    //   "ordering": true,
+    //   "info": true,
+    //   "autoWidth": false,
+    //   "responsive": true,
+    // });
   });
 </script>
 <script>

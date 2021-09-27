@@ -14,7 +14,7 @@
                   <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
               </div>
               <div class="info">
-                  <a href="#" class="d-block">Vijay</a>
+                  <a href="login.php" class="d-block">Login</a>
               </div>
           </div>
 

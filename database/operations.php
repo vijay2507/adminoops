@@ -151,7 +151,7 @@ class operations extends database
             }
         }
 
-        echo "----------------------------<br>" . $query;
+
         if (mysqli_query($this->connect(), $query)) {
             return true;
         }
@@ -168,7 +168,56 @@ class operations extends database
         //     return true;
         // }
     }
+
+
+
+    public function verify($user_table, $data, $field)
+    {
+        $query = "SELECT * FROM " . $user_table . " WHERE " . $data . " = " . "'$field'";
+        $check = mysqli_query($this->connect(), $query);
+        $result = mysqli_num_rows($check);
+        if ($result == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    function login($user_table, $email, $pass)
+    {
+
+
+        $query = "SELECT * FROM " . $user_table . " WHERE " . " email " . "=" . "'$email'";
+        $result = mysqli_query($this->connect(), $query);
+        if ($result) {
+            if (mysqli_num_rows($result) > 0) {
+                $check = mysqli_fetch_assoc($result);
+
+                if (password_verify($pass, $check['password'])) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            } else {
+                return 'invalid login credentials';
+            }
+        } else {
+            return mysqli_error($this->connect());
+        }
+
+        // $result = mysqli_num_rows($check);
+
+        // if ($result == 1) {
+        //     $_SESSION['login'] = true;
+
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+    }
 }
+
 
 // public function store_record()
 // print_r($condition_arr);
