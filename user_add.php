@@ -1,10 +1,8 @@
 <?php
 include_once('./database/operations.php');
-$db = new operations();
-
-
-
-
+if (($_SESSION['login'] != true) || ($_SESSION['id'] == '')) {
+    header('location:login.php');
+}
 $error_alert = '';
 if (isset($_POST['submit'])) {
     extract($_POST);

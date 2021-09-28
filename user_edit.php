@@ -1,8 +1,11 @@
 <?php
 include_once('./database/operations.php');
-$db = new operations();
+if (($_SESSION['login'] != true) || ($_SESSION['id'] == '')) {
+    header('location:login.php');
+}
 
 $updated = '';
+
 
 if (isset($_GET['action'])) {
     if (isset($_GET['id'])) {
@@ -39,7 +42,7 @@ if (isset($_GET['updated'])) {
 }
 ?>
 
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 

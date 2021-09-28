@@ -1,7 +1,7 @@
 <?php
 
 include_once('./database/operations.php');
-$db = new operations();
+
 if (isset($_POST['login'])) {
   extract($_POST);
   $email = $_POST['email'];
@@ -11,14 +11,14 @@ if (isset($_POST['login'])) {
 
   $login = $db->login('user_table', $email, $password);
 
-  if ($login == 0) {
+  if ($login == true) {
 
-    echo 'login succesfully';
+    echo ' login successfully';
     header('location:index.php');
   }
-  if ($login == 1) {
+  if ($login == 0) {
 
-    echo 'invalid credentials';
+    echo 'Invalid credentials';
   }
 }
 ?>

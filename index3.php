@@ -1,3 +1,11 @@
+<?php
+
+include_once('./database/operations.php');
+if (($_SESSION['login'] != true) || ($_SESSION['id'] == '')) {
+  header('location:login.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
